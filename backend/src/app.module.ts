@@ -11,9 +11,9 @@ import { GamesModule } from './games/games.module'; // NestJS já deve ter adici
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: '102307', // Sua senha real deve estar aqui
+      password: '102307', // Garanta que sua senha correta está aqui
       database: 'postgres',
-      autoLoadEntities: true, 
+      autoLoadEntities: true, // <<<--- ESTA É A LINHA QUE PRECISAMOS ADICIONAR
       synchronize: true,
     }),
     GamesModule, // O módulo de Games que criamos
