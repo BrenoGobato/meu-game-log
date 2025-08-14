@@ -1,24 +1,34 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common'; // Adicionar NotFoundException
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Game } from './game.entity';
+import { CreateGameDto } from './dto/create-game.dto';
 
 @Injectable()
 export class GamesService {
-  // 1. Injetando o Repositório no construtor
   constructor(
     @InjectRepository(Game)
     private readonly gamesRepository: Repository<Game>,
   ) {}
 
-  // 2. Nosso primeiro método para criar um jogo
-  async create(gameData: {
-    rawgId: number;
-    name: string;
-    coverImageUrl: string;
-  }): Promise<Game> {
-    const newGame = this.gamesRepository.create(gameData);
-
+  async create(createGameDto: CreateGameDto): Promise<Game> {
+    const newGame = this.gamesRepository.create(createGameDto);
     return this.gamesRepository.save(newGame);
+  }
+
+  async findAll(): Promise<Game[]> {
+    return this.gamesRepository.find();
+  }
+
+  // NOSSO NOVO MÉTODO PARA BUSCAR UM JOGO ESPECÍFICO
+  async findOne(id: string): Promise<Game> {
+    const game = await this.gamesRepository.findOneBy({ id });
+
+    if (!game) {
+      // Lançar um erro se o jogo com o ID fornecido não for encontrado
+      throw new NotFoundException(`Game with ID "${id}" not found`);
+    }
+
+    return game;
   }
 }
