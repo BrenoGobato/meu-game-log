@@ -34,9 +34,4 @@ export class GamesService {
     Object.assign(game, updateGameDto);
     return this.gamesRepository.save(game);
   }
-
-  async remove(id: string): Promise<void> {
-    const game = await this.findOne(id);
-    await this.gamesRepository.remove(game);
-  }
 }

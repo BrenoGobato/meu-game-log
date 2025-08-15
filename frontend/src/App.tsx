@@ -1,44 +1,46 @@
 import { useState, useEffect } from 'react';
-
-// 1. Definimos a "forma" de um objeto de jogo com TypeScript
-interface Game {
-  id: string;
-  name: string;
-  coverImageUrl: string;
-  status: string;
-}
+import { AddGameForm } from './components/AddGameForm'; // 1. Importar nosso novo componente
+import type { Game } from './interfaces/Game.interface.ts'; // (Vamos criar essa interface)
+import './App.css';
 
 function App() {
-  // 2. Criamos um "estado" (memória) para guardar a lista de jogos
   const [games, setGames] = useState<Game[]>([]);
 
-  // 3. useEffect é executado uma vez, quando o componente é montado na tela
-  useEffect(() => {
-    const apiUrl = 'http://localhost:3000/games'; // A URL do nosso backend!
+  // 2. Transformamos a lógica de busca em uma função reutilizável
+  const fetchGames = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/games');
+      const data = await response.json();
+      setGames(data);
+    } catch (error) {
+      console.error('Erro ao buscar jogos:', error);
+    }
+  };
 
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        setGames(data); // 4. Salvamos os dados recebidos no nosso estado
-      })
-      .catch(error => console.error('Erro ao buscar jogos:', error));
-  }, []); // O array vazio [] garante que isso só roda uma vez
+  // O useEffect agora apenas chama nossa função de busca
+  useEffect(() => {
+    fetchGames();
+  }, []);
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Meu Game Log</h1>
-
-      {/* 5. Mapeamos a lista de jogos e exibimos cada um */}
-      <ul>
-        {games.map(game => (
-          <li key={game.id}>
-            <img src={game.coverImageUrl} alt={game.name} width="60" />
-            <p>{game.name} ({game.status})</p>
-          </li>
+      {/* 3. Adicionamos o formulário e passamos a função fetchGames para ele */}
+      <AddGameForm onGameAdded={fetchGames} />
+      <hr className="separator" />
+      <div className="game-list">
+        {games.map((game) => (
+          <div key={game.id} className="game-card">
+            <img src={game.coverImageUrl} alt={game.name} className="game-cover" />
+            <div className="game-info">
+              <p className="game-name">{game.name}</p>
+              <p className="game-status">{game.status}</p>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
