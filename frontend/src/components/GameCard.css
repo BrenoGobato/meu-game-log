@@ -1,0 +1,22 @@
+.card-actions {
+  padding: 0 10px 10px 10px;
+  display: flex;
+  justify-content: flex-end; /* Alinha os botões à direita */
+  gap: 8px; /* Espaço entre os botões */
+}
+
+.delete-button {
+  padding: 5px 10px;
+  border: 1px solid #ff4d4d;
+  border-radius: 4px;
+  background-color: transparent;
+  color: #ff4d4d;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #ff4d4d;
+  color: #1a1a1a;
+}

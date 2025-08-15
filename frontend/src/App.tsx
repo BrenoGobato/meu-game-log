@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { AddGameForm } from './components/AddGameForm'; // 1. Importar nosso novo componente
-import type { Game } from './interfaces/Game.interface.ts'; // (Vamos criar essa interface)
+import { AddGameForm } from './components/AddGameForm';
+import { GameCard } from './components/GameCard'; // 1. Importar nosso novo componente
+import type { Game } from './interfaces/Game.interface';
 import './App.css';
 
 function App() {
   const [games, setGames] = useState<Game[]>([]);
 
-  // 2. Transformamos a lógica de busca em uma função reutilizável
   const fetchGames = async () => {
     try {
       const response = await fetch('http://localhost:3000/games');
@@ -17,7 +17,6 @@ function App() {
     }
   };
 
-  // O useEffect agora apenas chama nossa função de busca
   useEffect(() => {
     fetchGames();
   }, []);
@@ -25,18 +24,16 @@ function App() {
   return (
     <div className="app-container">
       <h1>Meu Game Log</h1>
-      {/* 3. Adicionamos o formulário e passamos a função fetchGames para ele */}
       <AddGameForm onGameAdded={fetchGames} />
       <hr className="separator" />
       <div className="game-list">
         {games.map((game) => (
-          <div key={game.id} className="game-card">
-            <img src={game.coverImageUrl} alt={game.name} className="game-cover" />
-            <div className="game-info">
-              <p className="game-name">{game.name}</p>
-              <p className="game-status">{game.status}</p>
-            </div>
-          </div>
+          // 2. Agora usamos nosso componente GameCard, muito mais limpo!
+          <GameCard 
+            key={game.id} 
+            game={game} 
+            onGameDeleted={fetchGames} // 3. Se um jogo for deletado, recarregamos a lista
+          />
         ))}
       </div>
     </div>
