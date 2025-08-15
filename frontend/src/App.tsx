@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AddGameForm } from './components/AddGameForm';
-import { GameCard } from './components/GameCard'; // 1. Importar nosso novo componente
-import type { Game } from './interfaces/Game.interface';
+import { GameCard } from './components/GameCard';
+import { type Game } from './interfaces/Game.interface';
 import './App.css';
 
 function App() {
@@ -21,6 +21,11 @@ function App() {
     fetchGames();
   }, []);
 
+  // Nova função para remover o jogo da lista na tela instantaneamente
+  const handleGameDeleted = (deletedGameId: string) => {
+    setGames(currentGames => currentGames.filter(game => game.id !== deletedGameId));
+  };
+
   return (
     <div className="app-container">
       <h1>Meu Game Log</h1>
@@ -28,11 +33,11 @@ function App() {
       <hr className="separator" />
       <div className="game-list">
         {games.map((game) => (
-          // 2. Agora usamos nosso componente GameCard, muito mais limpo!
           <GameCard 
             key={game.id} 
             game={game} 
-            onGameDeleted={fetchGames} // 3. Se um jogo for deletado, recarregamos a lista
+            onGameDeleted={handleGameDeleted}
+            onGameUpdated={fetchGames}
           />
         ))}
       </div>
