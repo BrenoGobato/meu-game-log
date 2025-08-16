@@ -9,10 +9,10 @@ function App() {
 
   const fetchGames = async () => {
     try {
-      const response = await fetch('http://localhost:3000/games');
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/games`);
       const data = await response.json();
       // Ordenamos os jogos por data de atualização para ver os mais recentes primeiro
-      const sortedData = data.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+      const sortedData = data.sort((a: Game, b: Game) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
       setGames(sortedData);
     } catch (error) {
       console.error('Erro ao buscar jogos:', error);

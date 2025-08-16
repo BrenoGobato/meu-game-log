@@ -1,0 +1,3 @@
+INTERNAL LINK - MEU GAME LOG
+
+postgresql://meu_game_log_db_user:nm2p64Sjzcq1twTEo4Hq11C0IgnoQaH6@dpg-d2gct27diees73dd45k0-a/meu_game_log_db

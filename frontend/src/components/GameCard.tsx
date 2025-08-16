@@ -12,7 +12,7 @@ export function GameCard({ game, onGameDeleted, onGameUpdated }: GameCardProps) 
 
   const updateGameOnApi = async (updateData: { status?: GameStatus, rating?: number | null }) => {
     try {
-      const response = await fetch(`http://localhost:3000/games/${game.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/games`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updateData),
