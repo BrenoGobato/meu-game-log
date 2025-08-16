@@ -1,0 +1,81 @@
+.game-search form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.game-search input {
+  flex-grow: 1;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.game-search input:focus {
+  outline: none;
+  border-color: #9f86ff;
+}
+
+.game-search button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #747bff;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.game-search button:hover {
+  background-color: #535bf2;
+}
+
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.result-card {
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  border: 1px solid #333;
+}
+
+.result-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.result-card p {
+  padding: 10px;
+  margin: 0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.result-card button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #3a9e54;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.result-card button:hover {
+  background-color: #45c267;
+}

@@ -1,9 +1,82 @@
+.card-actions {
+  padding: 10px;
+  display: flex;
+  justify-content: center; /* Centralizar o botão de deletar */
+  gap: 8px;
+}
+
+.delete-button {
+  padding: 5px 15px;
+  border: 1px solid #ff4d4d;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #ff4d4d;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #ff4d4d;
+  color: #1a1a1a;
+}
+
 .status-select {
   width: 100%;
-  padding: 4px;
-  border-radius: 4px;
+  padding: 6px;
+  margin-top: 5px;
+  border-radius: 6px;
   border: 1px solid #555;
   background-color: #333;
   color: #e0e0e0;
   font-size: 0.8rem;
+}
+
+.game-card .game-cover {
+    width: 100%;
+    max-height: 150px; 
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+/* --- REGRAS QUE FALTAVAM --- */
+.game-info {
+  padding: 10px;
+  flex-grow: 1; /* Faz esta área crescer para preencher o espaço vertical */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Empurra o dropdown/botões para o fundo */
+}
+
+.game-name {
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0 0 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* O truque para o "..." */
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  flex-direction: row-reverse;
+}
+
+.star {
+  font-size: 24px;
+  color: #555; /* Cor da estrela apagada */
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+}
+
+.star.filled {
+  color: #fdd835; /* Cor da estrela preenchida (amarelo) */
+}
+
+.star:hover {
+  transform: scale(1.2); /* Efeito de hover para dar feedback visual */
 }

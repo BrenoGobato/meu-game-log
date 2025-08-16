@@ -24,15 +24,18 @@ export class Game {
   @Column({ name: 'cover_image_url' }) // Coluna para a URL da imagem de capa
   coverImageUrl: string;
   
-  @Column({ name: 'rawg_id', unique: true }) // ID do jogo na API RAWG.io, deve ser único
-  rawgId: number;
+  @Column({ name: 'rawg_id', unique: true })
+rawgId: number;
+
+  @Column({ type: 'int', nullable: true, default: null })
+  rating: number;
 
   @Column({
     type: 'enum',
     enum: GameStatus,
-    default: GameStatus.BACKLOG, // O status padrão quando um jogo é adicionado
+    default: GameStatus.BACKLOG,
   })
-  status: GameStatus;
+  status: GameStatus
 
   @CreateDateColumn({ name: 'created_at' }) // Coluna que salva a data de criação automaticamente
   createdAt: Date;

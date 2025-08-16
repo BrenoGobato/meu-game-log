@@ -1,4 +1,4 @@
-import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 import { GameStatus } from '../game.entity'; // Importamos nosso enum
 
 export class UpdateGameDto {
@@ -12,4 +12,10 @@ export class UpdateGameDto {
   @IsEnum(GameStatus) // Garante que o valor seja um dos nossos status válidos
   @IsOptional()
   status?: GameStatus;
+
+  @IsInt()
+  @Min(1)
+  @Max(5) 
+  @IsOptional()
+  rating?: number;
 }
