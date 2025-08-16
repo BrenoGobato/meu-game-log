@@ -4,26 +4,45 @@ import './GameCard.css';
 interface GameCardProps {
   game: Game;
   onGameDeleted: (id: string) => void;
-  onGameUpdated: (updatedGame: Game) => void; // A prop agora espera o jogo atualizado
+  onGameUpdated: (updatedGame: Game) => void;
 }
 
 export function GameCard({ game, onGameDeleted, onGameUpdated }: GameCardProps) {
-  const handleDelete = async () => { /* ...código existente, sem mudanças... */ };
+  const handleDelete = async () => {
+    if (!window.confirm(`Tem certeza que deseja deletar "${game.name}"?`)) {
+      return;
+    }
 
-  const updateGameOnApi = async (updateData: { status?: GameStatus, rating?: number | null }) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/games`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/games/${game.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha ao deletar o jogo na API.');
+      }
+
+      // AVISO CORRIGIDO: Agora estamos usando a função e passando o ID
+      onGameDeleted(game.id);
+
+    } catch (error) {
+      console.error(error);
+      alert('Ocorreu um erro ao deletar o jogo.');
+    }
+  };
+
+  const updateGameOnApi = async (updateData: { status?: GameStatus; rating?: number | null }) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/games/${game.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updateData),
       });
 
-      if (!response.ok) {
-        throw new Error('Falha ao atualizar o jogo na API.');
-      }
+      if (!response.ok) { throw new Error('Falha ao atualizar o jogo na API.'); }
 
       const updatedGameFromServer = await response.json();
-      onGameUpdated(updatedGameFromServer); // Avisa o App com o novo objeto do jogo
+      onGameUpdated(updatedGameFromServer);
 
     } catch (error) {
       console.error(error);
@@ -41,6 +60,7 @@ export function GameCard({ game, onGameDeleted, onGameUpdated }: GameCardProps) 
   };
 
   return (
+    // O JSX do return continua o mesmo
     <div className="game-card">
       <img src={game.coverImageUrl} alt={game.name} className="game-cover" />
       <div className="game-info">
@@ -58,7 +78,6 @@ export function GameCard({ game, onGameDeleted, onGameUpdated }: GameCardProps) 
           </select>
         </div>
 
-        {/* --- LÓGICA CONDICIONAL PARA MOSTRAR AS ESTRELAS --- */}
         {(game.status === 'PLAYING' || game.status === 'COMPLETED' || game.status === 'DROPPED') && (
           <div className="star-rating">
             {[5, 4, 3, 2, 1].map((starValue) => (
@@ -66,17 +85,13 @@ export function GameCard({ game, onGameDeleted, onGameUpdated }: GameCardProps) 
                 key={starValue}
                 className={`star ${game.rating && starValue <= game.rating ? 'filled' : ''}`}
                 onClick={() => handleRatingChange(starValue)}
-              >
-                ★
-              </span>
+              >★</span>
             ))}
           </div>
         )}
       </div>
       <div className="card-actions">
-        <button onClick={handleDelete} className="delete-button">
-          Deletar
-        </button>
+        <button onClick={handleDelete} className="delete-button">Deletar</button>
       </div>
     </div>
   );

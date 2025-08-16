@@ -1,3 +1,7 @@
 INTERNAL LINK - MEU GAME LOG
 
 postgresql://meu_game_log_db_user:nm2p64Sjzcq1twTEo4Hq11C0IgnoQaH6@dpg-d2gct27diees73dd45k0-a/meu_game_log_db
+
+API RAWG KEY
+
+9cf2ae2491a44ecfa0acd71c95b3853f
